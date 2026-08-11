@@ -279,8 +279,25 @@ body {
 .choices .choices__list--dropdown {
     background-color: #1a2233 !important;
     border-color: #cbd5e1 !important;
+}
+
+.choices__list--dropdown .choices__list {
     max-height: 200px;
-    overflow-y: auto;
+    scrollbar-color: #cbd5e1 #1a2233;
+    scrollbar-width: thin;
+}
+
+.choices__list--dropdown .choices__list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.choices__list--dropdown .choices__list::-webkit-scrollbar-track {
+    background: #1a2233;
+}
+
+.choices__list--dropdown .choices__list::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 0;
 }
 
 .choices__list--dropdown .choices__item {

@@ -33,3 +33,8 @@ If you want current fixtures instead of the bundled snapshot, you'll need your o
    ```
 
 `fetch_data` pulls fixtures, teams, leagues and venues from the API. `geocode` looks up coordinates and timezones for venues that don't have them yet (used for the distance-based city search).
+
+By default `fetch_data` pulls the 2024 season. To fetch a different season instead:
+```bash
+python3 manage.py fetch_data --season 2025
+```

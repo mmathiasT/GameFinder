@@ -11,8 +11,8 @@ from games.models import League, Venue, Team, Fixture
 base_url =  "https://v3.football.api-sports.io/fixtures"
 api_key = os.environ.get('API_SPORTS_KEY')
 
-leagues = [6, 39, 40, 41, 42, 45, 46, 47, 48, 54, 61, 62, 63, 64, 66, 78, 79, 80, 81, 88, 89, 94, 96, 106, 135, 140, 144, 145, 146, 203, 204, 206, 208, 218, 220, 345, 346, ]
-season = 2024
+leagues = [6, 39, 40, 41, 42, 45, 46, 47, 48, 61, 62, 63, 64, 66, 78, 79, 80, 81, 88, 89, 94, 96, 106, 135, 140, 144, 145, 146, 203, 204, 206, 208, 218, 220, 345, 346, ]
+DEFAULT_SEASON = 2024
 
 payload={}
 headers = {
@@ -71,8 +71,8 @@ def save_fixture(fixture):
                 'league': league,
                 'home_team': home_team,
                 'guest_team': guest_team,
-                'home_goals': fixture['goals']['home'],
-                'away_goals': fixture['goals']['away'],
+                'home_goals': fixture['goals']['home'] or 0,
+                'away_goals': fixture['goals']['away'] or 0,
                 'status': fixture['fixture']['status']['short'],
             }
         )
@@ -81,7 +81,11 @@ def save_fixture(fixture):
 
 
 class Command(BaseCommand):
-    def handle(self, *args, **kwargs):
+    def add_arguments(self, parser):
+        parser.add_argument('--season', type=int, default=DEFAULT_SEASON)
+
+    def handle(self, *args, **options):
+        season = options['season']
         all_fixtures = []
 
         for league in leagues:
