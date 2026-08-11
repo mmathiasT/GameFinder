@@ -36,8 +36,8 @@ class Team(models.Model):
 class Fixture(models.Model):
     api_id = models.IntegerField(unique=True)
     date = models.DateTimeField()
-    referee = models.CharField(max_length=100)
-    round = models.CharField(max_length=100)
+    referee = models.CharField(max_length=100, null=True)
+    round = models.CharField(max_length=100, null=True)
 
     venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
     league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True)
@@ -50,7 +50,7 @@ class Fixture(models.Model):
 
     @property
     def fixture_localtime(self):
-        if self.venue.timezone_name is None:
+        if self.venue is None or self.venue.timezone_name is None:
             return self.date.replace(tzinfo=None)
         else:
             return self.date.astimezone(ZoneInfo(self.venue.timezone_name)).replace(tzinfo=None)

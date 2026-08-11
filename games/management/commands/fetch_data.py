@@ -11,7 +11,7 @@ from games.models import League, Venue, Team, Fixture
 base_url =  "https://v3.football.api-sports.io/fixtures"
 api_key = os.environ.get('API_SPORTS_KEY')
 
-leagues = [39, 140]
+leagues = [6, 39, 40, 41, 42, 45, 46, 47, 48, 54, 61, 62, 63, 64, 66, 78, 79, 80, 81, 88, 89, 94, 96, 106, 135, 140, 144, 145, 146, 203, 204, 206, 208, 218, 220, 345, 346, ]
 season = 2024
 
 payload={}
@@ -30,7 +30,10 @@ def save_league(league_data):
     )
     return league
 
-def save_venue(venue_data):                     
+def save_venue(venue_data):
+    if venue_data.get('id') is None:
+        return None
+
     venue, created = Venue.objects.update_or_create(
         api_id = venue_data['id'],
         defaults = {

@@ -8,8 +8,6 @@ from games.models import Venue
 base_url = "https://nominatim.openstreetmap.org/search"
 
 MANUAL_COORDINATES = {
-    "Estadio Municipal José Zorrilla": (41.6444, -4.7611)
-
 }
 
 def geocode_city(city):
@@ -51,6 +49,7 @@ class Command(BaseCommand):
         for venue in venues:
             query1 = f"{venue.name}, {venue.city}"
             query2 = f"{venue.name}"
+            query3 = f"{venue.city}"
 
             if venue.name in MANUAL_COORDINATES:
                 venue.latitude = MANUAL_COORDINATES[venue.name][0]
@@ -61,9 +60,23 @@ class Command(BaseCommand):
                 print(f"Manually geocoded venue: {venue.name}, {venue.city} to ({venue.latitude}, {venue.longitude})")
                 continue
 
-            geocode_result = geocode_venue(venue, query1)
-            if geocode_result is None:
-                break  # Stop processing if there was an HTTP error
+            queries = [
+                f"{venue.name}, {venue.city}",
+                f"{venue.name}",
+                f"{venue.city}",
+            ]
+
+            geocode_result = None
+            for query in queries:
+                geocode_result = geocode_venue(venue, query)
+
+                if geocode_result is None:
+                    break  # HTTP error
+
+                if geocode_result:
+                    break  # found venue
+
+                time.sleep(1) 
 
             if geocode_result:
                 venue.latitude = float(geocode_result[0]['lat'])
@@ -71,20 +84,7 @@ class Command(BaseCommand):
                 venue.timezone_name = TimezoneFinder().timezone_at(lng=venue.longitude, lat=venue.latitude)
                 venue.save()
                 print(f"Geocoded venue: {venue.name}, {venue.city} to ({venue.latitude}, {venue.longitude})")
-            else:
-                time.sleep(1)  # Sleep for 1 second to avoid hitting the rate limit of the API
-                geocode_result = geocode_venue(venue, query2)
-                if geocode_result is None:
-                    break
-
-                if geocode_result:
-                    venue.latitude = float(geocode_result[0]['lat'])
-                    venue.longitude = float(geocode_result[0]['lon'])
-                    venue.timezone_name = TimezoneFinder().timezone_at(lng=venue.longitude, lat=venue.latitude)
-                    venue.save()
-                    print(f"Geocoded venue: {venue.name}, {venue.city} to ({venue.latitude}, {venue.longitude})")
-                else:
-                    print(f"No geocoding result for venue: {venue.name}, {venue.city}")
-
-            time.sleep(1) # Sleep for 1 second to avoid hitting the rate limit of the API
+            elif geocode_result is not None:
+                print(f"No geocoding result for venue: {venue.name}, {venue.city}")
+            time.sleep(1)   # Sleep for 1 second to avoid hitting the rate limit of the API
 
