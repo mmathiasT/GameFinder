@@ -6,7 +6,6 @@ from .models import Fixture, League
 def matches(request):
     fixtures = Fixture.objects.select_related('venue', 'league', 'home_team', 'guest_team')
 
-    league_id = request.GET.get('league')
     venue = request.GET.get('venue')
     home_team = request.GET.get('home_team')
     guest_team = request.GET.get('guest_team')
@@ -16,9 +15,6 @@ def matches(request):
     city = request.GET.get('city')
     team = request.GET.get('team')
     leagues_id = request.GET.getlist('leagues')
-
-    if league_id:
-        fixtures = fixtures.filter(league__api_id=league_id)
 
     if venue:
         fixtures = fixtures.filter(venue__name__icontains=venue)
@@ -61,7 +57,6 @@ def matches(request):
 
     context = {
         'fixtures': fixtures,
-        'selected_league': league_id,
         'selected_venue': venue,
         'selected_home_team': home_team,
         'selected_guest_team': guest_team,

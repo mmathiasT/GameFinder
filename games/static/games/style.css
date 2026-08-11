@@ -1,15 +1,15 @@
 /* used colors:
-   background: #0a1128 (nighttime stand navy)
-   panel:      #16213e
-   accent:     #a3d977 (grass green)
-   text:       #e0e6f5
-   muted text: #7f8cb0
-   border:     #a3d977
+   background: #10151f (nighttime stand navy)
+   panel:      #1a2233
+   accent:     #cbd5e1 (light steel gray)
+   text:       #e8ecf2
+   muted text: #7a8699
+   border:     #cbd5e1
 */
 
 body {
-    background-color: #0a1128;
-    color: #e0e6f5;
+    background-color: #10151f;
+    color: #e8ecf2;
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
@@ -19,8 +19,8 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #16213e;
-    border-bottom: 4px solid #a3d977;
+    background-color: #1a2233;
+    border-bottom: 4px solid #cbd5e1;
     padding: 25px 0;
     text-align: center;
     box-shadow: 0px 4px 18px #000000;
@@ -31,7 +31,7 @@ body {
     font-size: 28px;
     text-transform: uppercase;
     letter-spacing: 3px;
-    color: #a3d977;
+    color: #cbd5e1;
     text-shadow: 2px 2px 0px #000000;
     animation: dropIn 0.6s ease-out;
 }
@@ -53,8 +53,8 @@ body {
 }
 
 .filter-panel {
-    background-color: #16213e;
-    border: 2px solid #a3d977;
+    background-color: #1a2233;
+    border: 2px solid #cbd5e1;
     padding: 20px;
     margin-bottom: 30px;
 }
@@ -77,34 +77,38 @@ body {
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #7f8cb0;
+    color: #7a8699;
     margin-bottom: 6px;
 }
 
 .field-group input {
     width: 100%;
-    background-color: #0a1128;
-    border: 2px solid #a3d977;
-    color: #e0e6f5;
+    background-color: #10151f;
+    border: 2px solid #cbd5e1;
+    color: #e8ecf2;
     padding: 8px;
     box-sizing: border-box;
 }
 
 .field-group input:focus {
-    background-color: #1c2b4e;
+    background-color: #232d42;
+}
+
+.field-group input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }
 
 .filter-actions {
     clear: both;
     padding-top: 10px;
-    border-top: 1px solid #26325c;
+    border-top: 1px solid #2a3548;
 }
 
 .btn {
     display: inline-block;
-    background-color: #a3d977;
-    color: #0a1128;
-    border: 2px solid #a3d977;
+    background-color: #cbd5e1;
+    color: #10151f;
+    border: 2px solid #cbd5e1;
     padding: 10px 22px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -115,56 +119,57 @@ body {
 }
 
 .btn:hover {
-    background-color: #c2e89c;
+    background-color: #ffffff;
     transform: scale(1.05);
 }
 
 .btn-reset {
     background-color: transparent;
-    color: #a3d977;
+    color: #cbd5e1;
     margin-left: 10px;
 }
 
 .btn-reset:hover {
-    background-color: #26325c;
+    background-color: #2a3548;
 }
 
-/* ===== scoreboard table ===== */
 .scoreboard {
     width: 100%;
     border-collapse: collapse;
-    border: 2px solid #a3d977;
+    border: 2px solid #cbd5e1;
+    font-size: 20px;
 }
 
 .scoreboard th {
-    background-color: #a3d977;
-    color: #0a1128;
+    background-color: #cbd5e1;
+    color: #10151f;
     text-transform: uppercase;
     letter-spacing: 1px;
-    padding: 12px;
-    text-align: left;
+    padding: 48px;
+    text-align: center;
 }
 
 .scoreboard td {
-    padding: 12px;
-    border-bottom: 1px solid #26325c;
+    padding: 48px;
+    border-bottom: 1px solid #2a3548;
     position: relative;
+    text-align: center;
 }
 
 .scoreboard tr:nth-child(even) {
-    background-color: #16213e;
+    background-color: #1a2233;
 }
 
 .scoreboard tr:hover td {
-    background-color: #1c2b4e;
+    background-color: #232d42;
     transform: scale(1.01);
 }
 
 .team-logo {
-    width: 22px;
-    height: 22px;
+    width: 28px;
+    height: 28px;
     vertical-align: middle;
-    margin: 0px 6px;
+    margin: 0px 8px;
 }
 
 .team-logo:hover {
@@ -172,52 +177,116 @@ body {
 }
 
 .vs {
-    color: #7f8cb0;
-    font-size: 12px;
+    color: #7a8699;
+    font-size: 16px;
     text-transform: uppercase;
-    margin: 0px 6px;
+    margin: 0px 10px;
+}
+
+.team-name {
+    display: inline-block;
+    width: 180px;
+}
+
+.team-name--home {
+    text-align: right;
+}
+
+.team-name--away {
+    text-align: left;
 }
 
 .kickoff {
     font-family: "Courier New", monospace;
-    color: #a3d977;
+    color: #cbd5e1;
     font-weight: bold;
 }
 
 .venue-cell {
-    color: #7f8cb0;
-    font-size: 13px;
+    color: #7a8699;
+    font-size: 18px;
 }
 
-/* league color tag, positioned in the corner of the cell */
+.venue-cell a {
+    color: #cbd5e1;
+}
+
+.venue-cell a:hover {
+    color: #ffffff;
+}
+
 .league-tag {
-    position: absolute;
-    top: 4px;
-    right: 8px;
-    font-size: 10px;
-    color: #7f8cb0;
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #7a8699;
+    margin-bottom: 8px;
 }
 
-/* ===== pagination ===== */
 .pagination {
     margin-top: 25px;
     text-align: center;
 }
 
 .pagination a {
-    color: #a3d977;
+    color: #cbd5e1;
     text-decoration: none;
-    border: 2px solid #a3d977;
+    border: 2px solid #cbd5e1;
     padding: 6px 14px;
     margin: 0px 6px;
 }
 
 .pagination a:hover {
-    background-color: #a3d977;
-    color: #0a1128;
+    background-color: #cbd5e1;
+    color: #10151f;
 }
 
 .pagination span {
-    color: #7f8cb0;
+    color: #7a8699;
     margin: 0px 10px;
+}
+
+.choices__inner {
+    background-color: #10151f;
+    border: 2px solid #cbd5e1;
+    border-radius: 0;
+    box-sizing: border-box;
+    min-height: unset;
+    width: 100%;
+    padding: 8px;
+}
+
+.choices__list--multiple .choices__item {
+    background-color: #cbd5e1;
+    border-color: #cbd5e1;
+    color: #10151f;
+}
+
+.choices__button {
+    border-left-color: #10151f !important;
+}
+
+.choices__input--cloned {
+    background-color: transparent !important;
+    color: #e8ecf2 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.choices__list--dropdown,
+.choices .choices__list--dropdown {
+    background-color: #1a2233 !important;
+    border-color: #cbd5e1 !important;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.choices__list--dropdown .choices__item {
+    color: #cbd5e1;
+}
+
+.choices__list--dropdown .choices__item.is-highlighted {
+    background-color: #0548f1;
 }
