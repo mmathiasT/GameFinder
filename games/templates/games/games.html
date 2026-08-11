@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Find football matches by league, team, city and date.">
+        <title>GameFinder</title>
+        <link rel="stylesheet" href="{% static 'games/style.css' %}">
+    </head>
+
+    <body>
+        <div class="topbar">
+            <h1>Find your perfect match wherever you want!</h1>
+        </div>
+
+        <div class="page">
+            <form method="GET" class="filter-panel">
+                <div class="field-group">
+                    <label>City</label>
+                    <input type="text" name="city" placeholder="e.g. London" value="{{ selected_city|default:'' }}">
+                </div>
+
+                <div class="field-group">
+                    <label>Team</label>
+                    <input type="text" name="team" placeholder="e.g. Arsenal" value="{{ selected_team|default:'' }}">
+                </div>
+
+                <div class="field-group">
+                    <label>Date from</label>
+                    <input type="datetime-local" name="fixture_localtime_from" value="{{ fixture_localtime_from|default:'' }}">
+                </div>
+
+                <div class="field-group">
+                    <label>Date to</label>
+                    <input type="datetime-local" name="fixture_localtime_to" value="{{ fixture_localtime_to|default:'' }}">
+                </div>
+
+                <div class="filter-actions">
+                    <input class="btn" type="Submit" value="Filter">
+                    <a class="btn btn-reset" href="?">Reset</a>
+                </div>
+            </form>
+
+            <table class="scoreboard">
+                <tr>
+                    <th>Kickoff</th>
+                    <th>Match</th>
+                    <th>Venue</th>
+                </tr>
+                {% for fixture in fixtures %}
+                    <tr>
+                        <td class="kickoff">{{ fixture.fixture_localtime }}</td>
+                        <td>
+                            <span class="league-tag">{{ fixture.league.name }}</span>
+                            {{ fixture.home_team.name }}
+                            <img class="team-logo" src="{{ fixture.home_team.logo }}">
+                            <span class="vs">vs</span>
+                            <img class="team-logo" src="{{ fixture.guest_team.logo }}">
+                            {{ fixture.guest_team.name }}
+                        </td>
+                        <td class="venue-cell">{{ fixture.venue }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            <div class="pagination">
+                {% if fixtures.has_previous %}
+                    <a href="?page={{ fixtures.previous_page_number }}">« Previous</a>
+                {% endif %}
+                <span>Page {{ fixtures.number }} of {{ fixtures.paginator.num_pages }}</span>
+                {% if fixtures.has_next %}
+                    <a href="?page={{ fixtures.next_page_number }}">Next »</a>
+                {% endif %}
+            </div>
+        </div>
+    </body>
+</html>

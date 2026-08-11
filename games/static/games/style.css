@@ -1,0 +1,223 @@
+/* used colors:
+   background: #0a1128 (nighttime stand navy)
+   panel:      #16213e
+   accent:     #a3d977 (grass green)
+   text:       #e0e6f5
+   muted text: #7f8cb0
+   border:     #a3d977
+*/
+
+body {
+    background-color: #0a1128;
+    color: #e0e6f5;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.topbar {
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #16213e;
+    border-bottom: 4px solid #a3d977;
+    padding: 25px 0;
+    text-align: center;
+    box-shadow: 0px 4px 18px #000000;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #a3d977;
+    text-shadow: 2px 2px 0px #000000;
+    animation: dropIn 0.6s ease-out;
+}
+
+@keyframes dropIn {
+    from {
+        transform: translateY(-40px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
+
+.page {
+    padding-top: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 60px;
+}
+
+.filter-panel {
+    background-color: #16213e;
+    border: 2px solid #a3d977;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.filter-panel::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.field-group {
+    float: left;
+    width: 220px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+}
+
+.field-group label {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #7f8cb0;
+    margin-bottom: 6px;
+}
+
+.field-group input {
+    width: 100%;
+    background-color: #0a1128;
+    border: 2px solid #a3d977;
+    color: #e0e6f5;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.field-group input:focus {
+    background-color: #1c2b4e;
+}
+
+.filter-actions {
+    clear: both;
+    padding-top: 10px;
+    border-top: 1px solid #26325c;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #a3d977;
+    color: #0a1128;
+    border: 2px solid #a3d977;
+    padding: 10px 22px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.15s, background-color 0.15s;
+}
+
+.btn:hover {
+    background-color: #c2e89c;
+    transform: scale(1.05);
+}
+
+.btn-reset {
+    background-color: transparent;
+    color: #a3d977;
+    margin-left: 10px;
+}
+
+.btn-reset:hover {
+    background-color: #26325c;
+}
+
+/* ===== scoreboard table ===== */
+.scoreboard {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #a3d977;
+}
+
+.scoreboard th {
+    background-color: #a3d977;
+    color: #0a1128;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px;
+    text-align: left;
+}
+
+.scoreboard td {
+    padding: 12px;
+    border-bottom: 1px solid #26325c;
+    position: relative;
+}
+
+.scoreboard tr:nth-child(even) {
+    background-color: #16213e;
+}
+
+.scoreboard tr:hover td {
+    background-color: #1c2b4e;
+    transform: scale(1.01);
+}
+
+.team-logo {
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
+    margin: 0px 6px;
+}
+
+.team-logo:hover {
+    transform: rotate(12deg);
+}
+
+.vs {
+    color: #7f8cb0;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0px 6px;
+}
+
+.kickoff {
+    font-family: "Courier New", monospace;
+    color: #a3d977;
+    font-weight: bold;
+}
+
+.venue-cell {
+    color: #7f8cb0;
+    font-size: 13px;
+}
+
+/* league color tag, positioned in the corner of the cell */
+.league-tag {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    font-size: 10px;
+    color: #7f8cb0;
+}
+
+/* ===== pagination ===== */
+.pagination {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.pagination a {
+    color: #a3d977;
+    text-decoration: none;
+    border: 2px solid #a3d977;
+    padding: 6px 14px;
+    margin: 0px 6px;
+}
+
+.pagination a:hover {
+    background-color: #a3d977;
+    color: #0a1128;
+}
+
+.pagination span {
+    color: #7f8cb0;
+    margin: 0px 10px;
+}
