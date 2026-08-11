@@ -47,7 +47,7 @@
                     <label>Leagues</label>
                     <select name="leagues" multiple="true" id="leagues_select">
                         {% for league in leagues %}
-                            <option value="{{league.api_id}}">
+                            <option value="{{league.api_id}}" {% if league.api_id|stringformat:"s" in selected_leagues %}selected{% endif %}>
                                 {{league.name}}
                             </option>
 

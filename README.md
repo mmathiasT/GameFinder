@@ -2,6 +2,22 @@
 
 A Django app for finding football matches by city, distance, team, league and date.
 
+![GameFinder screenshot showing a search for matches near Paris within 100km, with results for Paris Saint Germain vs Toulouse and PSG vs Nantes at Parc des Princes](screenshot.png)
+
+## About
+
+GameFinder pulls football fixtures (matches, teams, leagues, venues) from the [API-Sports](https://www.api-football.com/) football API and stores them in a local database.
+
+Each stadium's address is turned into map coordinates (latitude/longitude) using the [Nominatim](https://nominatim.org/) geocoding service, which is free and based on OpenStreetMap data.
+
+When you search for matches near a city within a certain distance, the app:
+1. Looks up the coordinates of the city you typed.
+2. Does a quick, rough filter to throw out stadiums that are obviously too far away.
+3. Calculates the exact distance to each remaining stadium using the [Haversine formula](https://en.wikipedia.org/wiki/Haversine_formula), which measures distance between two points on a sphere.
+4. Shows only the matches played at a stadium within your chosen radius.
+
+You can also filter by date range, so this is a great way to plan ahead — e.g. you're going somewhere for a week and want to see if there's a match nearby during your trip.
+
 ## Quick start
 
 ```bash
