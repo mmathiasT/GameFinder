@@ -29,7 +29,6 @@ class Team(models.Model):
     country = models.CharField(max_length=100)
     code = models.CharField(max_length=3, blank=True)
     logo = models.URLField(blank=True, null=True)
-    venue = models.ForeignKey(Venue, on_delete=models.SET_NULL, null=True)
   
     def __str__(self):
         return self.name

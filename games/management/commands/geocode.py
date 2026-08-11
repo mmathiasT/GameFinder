@@ -12,6 +12,29 @@ MANUAL_COORDINATES = {
 
 }
 
+def geocode_city(city):
+    query = f"{city}"
+
+    response = requests.get(base_url, params={'q': query, 'format': 'json', "limit": 1},
+        headers={'User-Agent': 'gamefinder-app'},
+    )
+
+    if response.status_code != 200:
+        print(f"HTTP {response.status_code} for {venue.name} — stopping, try again later")
+        return None
+    
+    geocode_result = response.json()
+
+    if geocode_result is None:
+        return  # Stop processing if there was an HTTP error
+    
+    if geocode_result:
+        city_lat = float(geocode_result[0]['lat'])
+        city_lon = float(geocode_result[0]['lon'])
+        return city_lat, city_lon
+
+
+
 def geocode_venue(venue, query):
     response = requests.get(base_url, params={'q': query, 'format': 'json', "limit": 1},
         headers={'User-Agent': 'gamefinder-app'},

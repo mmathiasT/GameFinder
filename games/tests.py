@@ -17,21 +17,20 @@ class FilterTestCases(TestCase):
             name='Premier League',
             country='England'
         )
-    
+
         self.venue = Venue.objects.create(
             api_id=1,
             name='Old Trafford',
             city='Manchester',
             timezone_name='Europe/London'
         )
-    
+
         self.home_team = Team.objects.create(
             api_id=33,
             name='Manchester United',
-            country='England',
-            venue=self.venue
+            country='England'
         )
-    
+
         self.away_team = Team.objects.create(
             api_id=1,
             name='Arsenal',
@@ -49,6 +48,53 @@ class FilterTestCases(TestCase):
             status='NS'
         )
 
+        self.second_league = League.objects.create(
+            api_id=140,
+            name='La Liga',
+            country='Spain'
+        )
+
+        self.second_venue = Venue.objects.create(
+            api_id=2,
+            name='Santiago Bernabeu',
+            city='Madrid',
+            timezone_name='Europe/Madrid'
+        )
+
+        self.third_team = Team.objects.create(
+            api_id=3,
+            name='Real Madrid',
+            country='Spain'
+        )
+
+        self.fourth_team = Team.objects.create(
+            api_id=4,
+            name='Barcelona',
+            country='Spain'
+        )
+
+        self.second_fixture = Fixture.objects.create(
+            api_id=200,
+            date='2024-08-18T20:00:00Z',
+            referee='Jane Doe',
+            round='1',
+            venue=self.second_venue,
+            league=self.second_league,
+            home_team=self.third_team,
+            guest_team=self.fourth_team,
+            status='NS'
+        )
+
+    def test_filter_by_multiple_leagues(self):
+        response = self.client.get('/?leagues=39&leagues=140')
+        self.assertContains(response, 'Manchester United')
+        self.assertContains(response, 'Real Madrid')
+
+    def test_reset_shows_all_fixtures(self):
+        response = self.client.get('/')
+        self.assertContains(response, 'Manchester United')
+        self.assertContains(response, 'Real Madrid')
+
     def test_filter_by_city_Manchester(self):
         response = self.client.get('/?city=Manchester')
         self.assertContains(response, 'Manchester United')
@@ -60,4 +106,3 @@ class FilterTestCases(TestCase):
     def test_filter_by_date_range(self):
         response = self.client.get('/?fixture_localtime_from=2024-08-01T00:00&fixture_localtime_to=2024-08-31T23:59')
         self.assertContains(response, 'Manchester United')
-
