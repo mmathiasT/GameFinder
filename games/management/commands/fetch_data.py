@@ -1,6 +1,7 @@
 import requests
 import os
 import json
+import time
 import django
 from datetime import datetime
 from django.core.management.base import BaseCommand
@@ -86,24 +87,25 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         season = options['season']
-        all_fixtures = []
 
         for league in leagues:
             url = base_url + "?" + f"league={league}" + "&" + f"season={season}"
             try:
-                response = requests.get(url, headers=headers);
-                
+                response = requests.get(url, headers=headers)
+
                 if response.status_code != 200:
                     print(f"Error fetching data for league {league}: {response.status_code}")
+                    time.sleep(7)  # avoid hitting the 10 requests/minute rate limit
                     continue
 
                 data = response.json()
-                
+
                 for fixture in data['response']:
                     save_fixture(fixture)
-                    all_fixtures.append(fixture)
+
+                print(f"Fetched league {league}: {len(data['response'])} fixtures")
             except Exception as e:
                 print(f"Error fetching data for league {league}: {e}")
 
-        print(all_fixtures)
+            time.sleep(7)  # avoid hitting the 10 requests/minute rate limit
 
