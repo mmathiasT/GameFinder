@@ -1,7 +1,6 @@
 from zoneinfo import ZoneInfo
 
 from django.db import models
-from django.core.validators import MinLengthValidator
 
 class League(models.Model):
     api_id = models.IntegerField(unique=True)

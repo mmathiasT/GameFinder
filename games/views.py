@@ -8,7 +8,17 @@ from haversine import haversine, Unit
 
 KM_PER_DEGREE = 112
 
-def filters(fixtures, venue, home_team, guest_team, status, city, radius_km, leagues_id, team, fixture_localtime_from, fixture_localtime_to):
+def filters(fixtures, params):
+    venue = params['venue']
+    home_team = params['home_team']
+    guest_team = params['guest_team']
+    status = params['status']
+    city = params['city']
+    radius_km = params['radius_km']
+    leagues_id = params['leagues_id']
+    team = params['team']
+    fixture_localtime_from = params['fixture_localtime_from']
+    fixture_localtime_to = params['fixture_localtime_to']
 
     if venue:
         fixtures = fixtures.filter(venue__name__icontains=venue)
@@ -81,18 +91,20 @@ def filters(fixtures, venue, home_team, guest_team, status, city, radius_km, lea
 def matches(request):
     fixtures = Fixture.objects.select_related('venue', 'league', 'home_team', 'guest_team').order_by('date')
 
-    venue = request.GET.get('venue')
-    home_team = request.GET.get('home_team')
-    guest_team = request.GET.get('guest_team')
-    fixture_localtime_from = request.GET.get('fixture_localtime_from')
-    fixture_localtime_to = request.GET.get('fixture_localtime_to')
-    status = request.GET.get('status')
-    city = request.GET.get('city')
-    radius_km = request.GET.get('range')
-    team = request.GET.get('team')
-    leagues_id = request.GET.getlist('leagues')
+    params = {
+        'venue': request.GET.get('venue'),
+        'home_team': request.GET.get('home_team'),
+        'guest_team': request.GET.get('guest_team'),
+        'fixture_localtime_from': request.GET.get('fixture_localtime_from'),
+        'fixture_localtime_to': request.GET.get('fixture_localtime_to'),
+        'status': request.GET.get('status'),
+        'city': request.GET.get('city'),
+        'radius_km': request.GET.get('range'),
+        'team': request.GET.get('team'),
+        'leagues_id': request.GET.getlist('leagues'),
+    }
 
-    fixtures = filters(fixtures, venue, home_team, guest_team, status, city, radius_km, leagues_id, team, fixture_localtime_from, fixture_localtime_to)
+    fixtures = filters(fixtures, params)
 
     paginator = Paginator(fixtures, 100)
     page_number = request.GET.get('page')
@@ -100,16 +112,16 @@ def matches(request):
 
     context = {
         'fixtures': fixtures,
-        'selected_venue': venue,
-        'selected_home_team': home_team,
-        'selected_guest_team': guest_team,
-        'fixture_localtime_from': fixture_localtime_from,
-        'fixture_localtime_to': fixture_localtime_to,
-        'selected_status': status,
-        'selected_city': city,
-        'selected_team': team,
-        'selected_leagues': leagues_id,
-        'selected_range': radius_km,
+        'selected_venue': params['venue'],
+        'selected_home_team': params['home_team'],
+        'selected_guest_team': params['guest_team'],
+        'fixture_localtime_from': params['fixture_localtime_from'],
+        'fixture_localtime_to': params['fixture_localtime_to'],
+        'selected_status': params['status'],
+        'selected_city': params['city'],
+        'selected_team': params['team'],
+        'selected_leagues': params['leagues_id'],
+        'selected_range': params['radius_km'],
         'leagues': League.objects.all(),
     }
     return render(request, 'games/games.html', context)

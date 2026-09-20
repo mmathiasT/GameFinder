@@ -1,9 +1,6 @@
 import requests
 import os
-import json
 import time
-import django
-from datetime import datetime
 from django.core.management.base import BaseCommand
 
 
